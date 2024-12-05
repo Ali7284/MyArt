@@ -1,0 +1,318 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #645433;
+  --secondary-color: #282117;
+  --hover-background-color: #f5f1ea;
+
+  --hover-background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Light overlay for hover */
+}
+
+#cover {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--primary-color) 85%,
+    var(--secondary-color) 100%
+  );
+
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#cover .dummies-div {
+  width: 700px;
+  height: 550px;
+  position: relative;
+  z-index: 0;
+}
+
+#cover .dummies-div img {
+  position: absolute;
+  width: 100%;
+  height: auto;
+}
+#cover .dummies-div svg {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  top: 25%;
+  left: -5%;
+}
+
+#cover .dummies-div #circle2 {
+  height: 100%;
+  transform: rotateX(-27deg); /* Tilts the element upwards on the left side */
+  transform-origin: right center; /* Pivot point set to the left side of the element */
+  transition: transform 0.5s ease;
+}
+
+#cover .dummies-div:nth-child(1) {
+  left: -500px;
+}
+
+#cover .dummies-div:nth-child(2) {
+  z-index: 1;
+}
+.orbit-line2,
+.orbit-line1 {
+  stroke-dasharray: 2000; /* Length of the path */
+  stroke-dashoffset: 2000; /* Initially hidden */
+  animation: draw 3s linear forwards; /* 2 seconds duration */
+}
+
+.orbit-line2 {
+  transform: 5px;
+  stroke-dasharray: 4 4; /* Dots with 4 units of stroke and 4 units of gap */
+  stroke-width: 2; /* Maintain the stroke width */
+  stroke: var(--hover-background-color); /* Path color */
+  fill: none; /* Ensure no fill */
+  animation: draw 3s linear infinite; /* 2 seconds duration */
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+#stars-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#navbar {
+  width: 100%;
+  height: 0px;
+  border-bottom: 3px solid var(--primary-color);
+  background-color: transparent;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  overflow: hidden;
+  transition: height 1.5s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#navbar button {
+  margin: 0;
+  border-right: 1px solid var(--primary-color);
+  background: transparent;
+  border-bottom: none;
+  border-top: none;
+  padding: 10px;
+  position: relative;
+}
+#navbar button::before,
+#navbar button::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: -1px;
+  height: 0;
+  background-color: var(--hover-background-color);
+}
+#navbar button::before {
+  background-color: var(--primary-color);
+}
+#navbar button:hover::after {
+  border: 1px solid var(--hover-background-color);
+  width: 101%;
+  height: 100%;
+  transition: height 2s ease;
+  z-index: 2;
+}
+
+#navbar button:hover::before {
+  left: -1px;
+  width: 101%;
+  height: 100%;
+  border: 3px solid var(--primary-color);
+
+  transition: height 1s ease;
+  z-index: 1;
+}
+
+#stars-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: twinkle 50s infinite ease-in-out, drift 30s infinite linear;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Twinkle animation for flickering effect */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+/* Drift animation for gentle movement */
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(15px, 10px) rotate(15deg);
+  }
+  100% {
+    transform: translate(-15px, -10px) rotate(-15deg);
+  }
+}
+
+/* Randomize animation delays for individual stars */
+.star:nth-child(odd) {
+  animation-delay: 2s, 1s;
+}
+.star:nth-child(even) {
+  animation-delay: 1s, 3s;
+}
+
+@media (max-width: 480px) {
+  #cover {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  #cover .dummies-div {
+    width: 100%;
+    height: 300px;
+  }
+  #cover .dummies-div svg {
+    position: absolute;
+    width: 95%;
+    height: 110%;
+    top: 25%;
+    left: 10px;
+  }
+
+  #navbar {
+    flex-direction: column;
+    height: auto;
+  }
+
+  #navbar button {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .star {
+    width: 2px;
+    height: 2px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  #cover {
+    padding: 20px;
+  }
+
+  #navbar button {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .star {
+    width: 3px;
+    height: 3px;
+  }
+
+  #cover .dummies-div {
+    width: 40%;
+    height: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #cover {
+    flex-direction: row;
+    padding: 40px;
+  }
+
+  #navbar {
+    flex-direction: row;
+    height: 60px;
+  }
+
+  #navbar button {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .star {
+    width: 4px;
+    height: 4px;
+  }
+
+  #cover .dummies-div {
+    width: 700px;
+    height: 500px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  #cover {
+    padding: 50px;
+  }
+
+  #navbar button {
+    padding: 14px;
+    font-size: 18px;
+  }
+
+  .star {
+    width: 5px;
+    height: 5px;
+  }
+}
